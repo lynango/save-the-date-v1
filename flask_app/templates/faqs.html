@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div>
+        <div class="header"><h1 class="header">Lyna & Hugh</h1></div>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light justify-content-around" style="background-color: #e3f2fd;">
+            <a href="/home" class="navbar-brand">Home</a>
+            <a href="/schedule" class="navbar-brand">Schedule</a>
+            <a href="/photos" class="navbar-brand">Photos</a>
+            <a href="/wedding-party" class="navbar-brand">Wedding Party</a>
+            <a href="/lodging" class="navbar-brand">Lodging</a>
+            <a href="/guest-book" class="navbar-brand">Guest Book</a>    
+            <a href="/faqs" class="navbar-brand">FAQS</a>
+            <a href="/logout" class="navbar-brand">Logout</a>
+            </nav>
+        </div>
+        <div class="block">
+            <h1>FAQS</h1>
+            <h5>If you have any other questions other than what are listed here, please leave your question down below and we'll answer it as soon as possible!</h5>
+            <form action="/ask/question" method="post" class="form-inline pt-4 justify-content-center">
+                {% with messages = get_flashed_messages(category_filter=['question']) %}
+                    {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Error</strong>
+                            {% for message in messages %}
+                            <p>{{message}}</p>
+                            {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                <div class="form-group mb-2 pl-5">
+                    <label for="question" class="col-sm-2 col-form-label">Question:</label>
+                    <div class="col-lg-10">
+                        <input type="text" class="form-control" name="question">
+                    </div>                
+                </div>
+                <button type="submit" value="question" class="btn btn-primary mb-2">Submit</button>
+            </form>
+        </div>
+        <div class="d-flex pt-4 justify-content-around">
+            <div>
+                <h3>Questions</h3>
+                <table>
+                    <thead>
+                        <tr></tr>
+                        <tr></tr>
+                    </thead>
+                    <tbody>
+                        {% for one_question in all_questions %}
+                            <tr>
+                                <td>Question: {{one_question.question}}</td>
+                                <td>
+                                    <a href="/reply/question/{{one_question.id}}">Reply |</a>
+                                    {% if one_question.user_id == session.user_id %}
+                                    <a href="/edit/question/{{one_question.id}}">Edit |</a>
+                                    <a href="/delete/question/{{one_question.id}}">Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3>Answers</h3>
+                <table>
+                    <thead>
+                        <tr></tr>
+                        <tr></tr>
+                    </thead>
+                    <tbody>
+                        {% for answer in answers %}
+                            <tr>
+                                <td>Answer: {{answer.answer}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

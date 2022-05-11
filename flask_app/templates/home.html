@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div>
+        <div class="header"><h1 class="header">Lyna & Hugh</h1></div>
+        <div>
+            <nav class="navbar navbar-expand-lg navbar-light justify-content-around" style="background-color: #e3f2fd;">
+            <a href="/home" class="navbar-brand">Home</a>
+            <a href="/schedule" class="navbar-brand">Schedule</a>
+            <a href="/photos" class="navbar-brand">Photos</a>
+            <a href="/wedding-party" class="navbar-brand">Wedding Party</a>
+            <a href="/lodging" class="navbar-brand">Lodging</a>
+            <a href="/guest-book" class="navbar-brand">Guest Book</a>    
+            <a href="/faqs" class="navbar-brand">FAQS</a>
+            <a href="/logout" class="navbar-brand">Logout</a>
+            </nav>
+        </div>
+        <div class="center">
+            <img src="{{ url_for('static', filename='engagement.jpg') }}" class="homeEngagementPic">
+        </div>
+        <div class="block">
+            <h1>Lyna Ngo</h1>
+            <h1>&</h1>
+            <h1>Hugh King</h1>
+        </div>
+        <div class="block">
+            <h1>December 10, 2023</h1>
+            <h4>#NgoPhoKingWei</h4>
+        </div>
+        <div class="block">
+            <h1>Long Story Short...</h1>
+            <div class="text-box">
+                <p>Lyna and Hugh met through some friends when they were students at the University of Arizona in 2011.  They only dated for 2 days and then did not speak with each other, until a year later, when Hugh randomly showed up at the doorsteps of Lyna's place and then they became friends. 3 years later, they finally became a couple again. Hugh pop the question 7 years later in Iceland.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
