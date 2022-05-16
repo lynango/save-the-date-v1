@@ -11,7 +11,7 @@ bcrypt = Bcrypt(app)
 #Shows the front page
 @app.route('/')
 def index():
-    return render_template('front_page.html')
+    return render_template('login_registration.html')
 
 #Process user's request to register
 @app.route('/register',methods=['POST'])
