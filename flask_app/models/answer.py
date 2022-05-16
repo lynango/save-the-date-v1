@@ -1,6 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask import flash
+from flask_app.models import question
 from flask_app.models import user
 
 class Answer:
@@ -16,7 +17,10 @@ class Answer:
 # Create an answer
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO answers (answer, user_id) VALUES (%(answer)s,%(user_id)s);"
+        query = """
+        INSERT INTO answers (answer, user_id, question_id) 
+        VALUES (%(answer)s,%(user_id)s,%(question_id)s);
+        """
         return connectToMySQL(cls.db_name).query_db(query, data)
 
 # Retrieve all answers
@@ -29,36 +33,38 @@ class Answer:
             answers.append( cls(row) )
         return answers
 
-# Retrieve all answers with creator
+# Retrieve all answers with questions
     @classmethod
     def get_all_answers_with_creator(cls):
-        query = "SELECT * FROM answers JOIN users ON answers.user_id = users.id ORDER BY answers.created_at DESC;"
+        query = """
+                # SELECT * FROM answers 
+                # JOIN questions ON answers.question_id = questions.id
+                # ORDER BY questions.id ASC;
+                SELECT * FROM questions
+                JOIN answers ON answers.question_id = questions.id
+                JOIN users ON questions.user_id = users.id
+                ORDER BY questions.id ASC;
+                """
         results = connectToMySQL(cls.db_name).query_db(query)
+        for result in results:
+            print("*************", result)
         all_answers = []
         for row in results:
             one_answer = cls(row)
-            user_data = {
-                "id": row['users.id'],
-                "first_name": row['first_name'],
-                "last_name": row['last_name'],
-                "email": row['email'],
-                "password": row['password'],
-                "created_at": row['users.created_at'],
-                "updated_at": row['users.updated_at']
-            }
-            author = user.User(user_data)
-            # Associate the Answer class instance with the User class instance by filling in the empty creator attribute in the Answer class
-            one_answer.creator = author
             all_answers.append(one_answer)
         return all_answers
 
-# Retrieve a certain answer
+# Retrieve all answers by question_id
     @classmethod
     def get_one(cls,data):
-        query = "SELECT * FROM answers WHERE id = %(id)s;"
+        query = "SELECT * FROM answers WHERE question_id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query,data)
-        print(results)
-        return cls( results[0] )
+        print("**********RESULTS = ",results)
+        answersList = []
+        for result in results:
+            answer = cls(result)
+            answersList.append(answer)
+        return answersList
 
 # # Update answer
 #     @classmethod

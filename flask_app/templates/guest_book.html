@@ -10,7 +10,10 @@
 </head>
 <body>
     <div>
-        <div class="header"><h1 class="header">Lyna & Hugh</h1></div>
+        <div class="header">
+            <h1 class="header">Lyna & Hugh</h1>
+            <h2>#NgoPhoKingWei</h2>
+        </div>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light justify-content-around" style="background-color: #e3f2fd;">
             <a href="/home" class="navbar-brand">Home</a>
@@ -27,25 +30,14 @@
             <h1>Kindly sign our Guest Book</h1>
             <h5>Leave some well wishes, share some wisdom, a piece of advice, or a funny memory.</h5>
         </div>
-        <div class="d-flex pt-4 justify-content-around">
-            <div>
-                <h3>Messages</h3>
-                <table>
-                    <thead>
-                        <tr></tr>
-                        <tr></tr>
-                    </thead>
-                    <tbody>
-                        {% for one_message in all_messages %}
-                            <tr>
-                                <td>Message: {{one_message.message}}</td>
-                                <td> - {{one_message.creator.first_name}}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+        <div class="d-flex pt-4 justify-content-center">
+            <div class="split-it border-right">
+                <h3 class="pb-3">Messages</h3>
+                {% for one_message in all_messages %}
+                    <p class="bubble">{{one_message.message}} - {{one_message.creator.first_name}}</p>
+                {% endfor %}
             </div>
-            <div>
+            <div class="split-it border-left">
                 <form action="/leave/message" method="post" class="form-inline pt-4 justify-content-center">
                     {% with messages = get_flashed_messages() %}
                         {% if messages %}
@@ -60,7 +52,7 @@
                     <div class="form-group mb-2">
                         <label for="message" class="col-sm-2 col-form-label">Message:</label>
                         <div class="col-lg-10">
-                            <textarea name="message" cols="30" rows="5" class="form-control"></textarea>
+                            <textarea name="message" cols="30" rows="5" class="form-control guest-book-font"></textarea>
                         </div>                
                     </div>
                     <button type="submit" value="message" class="btn btn-primary mb-2">Submit</button>

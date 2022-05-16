@@ -114,20 +114,6 @@ def guestBook():
         all_messages = messages
     )
 
-#Directs the user to the FAQS page
-@app.route('/faqs')
-def faqs():
-    if 'user_id' not in session:
-        return redirect('/logout')
-    data = {
-        "id":session['user_id']
-    }
-    questions = Question.get_all_questions_with_creator()
-    return render_template(
-        'faqs.html',
-        all_questions = questions
-        )
-
 # Directs the user to the edit page to edit question
 @app.route('/edit/question/<int:id>')
 def edit_question(id):
@@ -145,6 +131,26 @@ def edit_question(id):
         user=User.get_by_id(user_data)
         )
 
+#Directs the user to the FAQS page
+@app.route('/faqs')
+def faqs():
+    if 'user_id' not in session:
+        return redirect('/logout')
+    data = {
+        "id":id
+    }
+    user_data = {
+        "id":session['user_id']
+    }
+    questions = Question.get_all_questions_with_creator()
+    all_answers = Answer.get_all_answers_with_creator()
+    return render_template(
+        'faqs.html',
+        all_questions = questions,
+        user=User.get_by_id(user_data),
+        all_answers = all_answers,
+        )
+
 # Directs the user to the reply_question page to reply to question
 @app.route('/reply/question/<int:id>')
 def show_question(id):
@@ -156,11 +162,16 @@ def show_question(id):
     user_data = {
         "id":session['user_id']
     }
-    answers = Answer.get_all_answers_with_creator()
+    all_answers=Answer.get_one(data),
+    # print("**********all answers type = ",type(all_answers))
+    print("**********all answers = ",all_answers)
+    for answer in all_answers:
+        # print("**********answer type = ",type(answer))
+        print("**********answer = ",answer)
     return render_template(
         "reply_question.html",
         question = Question.get_one(data),
         user=User.get_by_id(user_data),
-        all_answers = answers
+        all_answers=all_answers,
         )
 

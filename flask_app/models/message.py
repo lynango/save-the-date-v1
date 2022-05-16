@@ -16,7 +16,10 @@ class Message:
 # Create a message
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO messages (message, user_id) VALUES (%(message)s,%(user_id)s);"
+        query = """
+        INSERT INTO messages (message, user_id) 
+        VALUES (%(message)s,%(user_id)s);
+        """
         return connectToMySQL(cls.db_name).query_db(query, data)
 
 # Retrieve all messages
@@ -32,7 +35,11 @@ class Message:
 # Retrieve all messages with creator
     @classmethod
     def get_all_messages_with_creator(cls):
-        query = "SELECT * FROM messages JOIN users ON messages.user_id = users.id ORDER BY messages.created_at DESC;"
+        query = """
+        SELECT * FROM messages 
+        JOIN users ON messages.user_id = users.id 
+        ORDER BY messages.created_at DESC;
+        """
         results = connectToMySQL(cls.db_name).query_db(query)
         all_messages = []
         for row in results:
@@ -78,5 +85,8 @@ class Message:
         is_valid = True
         if len(message['message']) < 3:
             is_valid = False
-            flash("Message must be at least 3 characters", "message")
+            flash("Message must be at least 3 characters.", "message")
+        if len(message['message']) > 255:
+            is_valid = False
+            flash("Message must be less than 255 characters.", "message")
         return is_valid

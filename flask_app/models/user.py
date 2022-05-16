@@ -23,6 +23,7 @@ class User:
         self.updated_at = data['updated_at']
         self.messages = []
         self.questions = []
+        self.answers = []
 
 # Create a user
     @classmethod

@@ -10,7 +10,10 @@
 </head>
 <body>
     <div>
-        <div class="header"><h1 class="header">Lyna & Hugh</h1></div>
+        <div class="header">
+            <h1 class="header">Lyna & Hugh</h1>
+            <h2>#NgoPhoKingWei</h2>
+        </div>
         <div>
             <nav class="navbar navbar-expand-lg navbar-light justify-content-around" style="background-color: #e3f2fd;">
             <a href="/home" class="navbar-brand">Home</a>
@@ -25,32 +28,34 @@
         </div>
         <div class="block">
             <h1>Question: {{question.question}}</h1>
-        </div>
-        <div>
-            <form action="/reply" method="post" class="form-inline pt-4 justify-content-center">
-                {% with messages = get_flashed_messages(category_filter=['answer']) %}
-                    {% if messages %}
-                    <div class="alert alert-danger" role="alert">
-                        <strong>Error</strong>
-                            {% for message in messages %}
-                            <p>{{message}}</p>
-                            {% endfor %}
+            <div>
+                <form action="/reply" method="post" class="form-inline pt-4 justify-content-center">
+                    {% with messages = get_flashed_messages(category_filter=['answer']) %}
+                        {% if messages %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Error</strong>
+                                {% for message in messages %}
+                                <p>{{message}}</p>
+                                {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endwith %}
+                    <div class="form-group mb-2 pl-5">
+                        
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" name="answer">
+                            <input type="hidden" class="form-control" name="question_id" value={{question.id}}>
+                            {#<h1>{{question.id}}</h1>#}
+                        </div>                
                     </div>
-                    {% endif %}
-                {% endwith %}
-                <div class="form-group mb-2 pl-5">
-                    
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control" name="answer">
-                    </div>                
-                </div>
-                <button type="submit" value="answer" class="btn btn-primary mb-2">Reply</button>
-            </form>
+                    <button type="submit" value="answer" class="btn btn-primary mb-2">Reply</button>
+                </form>
+            </div>
         </div>
-        <div>
-            {% for one_answer in all_answers %}
-            <p>Answer: {{one_answer.answer}}</p>
-            {% endfor %}
+        <div class="block">
+                {% for one_answer in all_answers[0] %}
+                    <h1>Answer: {{one_answer.answer}}</h1>
+                {% endfor %}
         </div>
     </div>
 </body>

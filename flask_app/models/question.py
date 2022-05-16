@@ -2,6 +2,8 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask import flash
 from flask_app.models import user
+from flask_app.models import answer
+from flask_app.models import question
 
 class Question:
     db_name = "save_the_date"
@@ -17,7 +19,10 @@ class Question:
 # Create a question
     @classmethod
     def save(cls,data):
-        query = "INSERT INTO questions (question, user_id) VALUES (%(question)s,%(user_id)s);"
+        query = """
+        INSERT INTO questions (question, user_id) 
+        VALUES (%(question)s,%(user_id)s);
+        """
         results = connectToMySQL(cls.db_name).query_db(query, data)
         print(results)
         return results
@@ -35,7 +40,15 @@ class Question:
 # Retrieve all questions with creator
     @classmethod
     def get_all_questions_with_creator(cls):
-        query = "SELECT * FROM questions JOIN users ON questions.user_id = users.id ORDER BY questions.created_at ASC;"
+        query = """
+        SELECT * FROM questions 
+        JOIN users ON questions.user_id = users.id 
+        ORDER BY questions.created_at ASC;
+        # SELECT * FROM questions
+        # JOIN answers ON answers.question_id = questions.id
+        # JOIN users ON questions.user_id = users.id
+        # ORDER BY questions.id ASC;
+        # """
         results = connectToMySQL(cls.db_name).query_db(query)
         all_questions = []
         for row in results:
@@ -61,12 +74,15 @@ class Question:
         query = "SELECT * FROM questions WHERE id = %(id)s;"
         results = connectToMySQL(cls.db_name).query_db(query,data)
         print(results)
-        return cls( results[0] )
+        return cls(results[0])
 
 # Update question
     @classmethod
     def update(cls, data):
-        query = "UPDATE questions SET question=%(question)s,updated_at=NOW() WHERE id = %(id)s;"
+        query = """
+        UPDATE questions 
+        SET question=%(question)s,updated_at=NOW() WHERE id = %(id)s;
+        """
         return connectToMySQL(cls.db_name).query_db(query,data)
 
 # Delete question
