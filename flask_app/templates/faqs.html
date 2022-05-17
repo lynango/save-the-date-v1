@@ -58,20 +58,20 @@
                         </thead>
                     <tbody>
                         {% for one_question in all_questions %}
-                            <tr>
-                                <td>Question: {{one_question.question}} <br>
-                                        <a href="/reply/question/{{one_question.id}}">Reply |</a>
-                                    {% if one_question.user_id == session.user_id %}
-                                        <a href="/edit/question/{{one_question.id}}">Edit |</a>
-                                        <a href="/delete/question/{{one_question.id}}">Delete</a>
-                                    {% endif %}
-                                    <hr>
-                                </td>
-                                {#{% for one_answer in all_answers[0] %}
-                                <td>Answer: {{one_answer.answer}}</td>
-                                {% endfor %} #}
-                            </tr>
-                        {% endfor %}
+                        <tr>
+                            <td>Question: {{one_question.question}} <br>
+                                    <a href="/reply/question/{{one_question.id}}">Reply |</a>
+                                {% if one_question.user_id == session.user_id %}
+                                    <a href="/edit/question/{{one_question.id}}">Edit |</a>
+                                    <a href="/delete/question/{{one_question.id}}">Delete</a>
+                                {% endif %}
+                                <hr>
+                            </td>
+                            {#{% for one_answer in all_answers[0] %}
+                            <td>Answer: {{one_answer.answer}}</td>
+                            {% endfor %} #}
+                        </tr>
+                    {% endfor %}
                     </tbody>
                     </table>
                 </div>

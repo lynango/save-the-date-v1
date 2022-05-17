@@ -37,9 +37,6 @@ class Answer:
     @classmethod
     def get_all_answers_with_creator(cls):
         query = """
-                # SELECT * FROM answers 
-                # JOIN questions ON answers.question_id = questions.id
-                # ORDER BY questions.id ASC;
                 SELECT * FROM questions
                 JOIN answers ON answers.question_id = questions.id
                 JOIN users ON questions.user_id = users.id

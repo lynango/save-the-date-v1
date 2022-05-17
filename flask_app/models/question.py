@@ -44,11 +44,7 @@ class Question:
         SELECT * FROM questions 
         JOIN users ON questions.user_id = users.id 
         ORDER BY questions.created_at ASC;
-        # SELECT * FROM questions
-        # JOIN answers ON answers.question_id = questions.id
-        # JOIN users ON questions.user_id = users.id
-        # ORDER BY questions.id ASC;
-        # """
+        """
         results = connectToMySQL(cls.db_name).query_db(query)
         all_questions = []
         for row in results:
