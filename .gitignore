@@ -169,3 +169,30 @@ cython_debug/
 #.idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/flask
+
+from server import app as application
+if __name__ == "__main__":
+    application.run()
+
+sudo ln -s /etc/nginx/sites-available/save-the-date /etc/nginx/sites-enabled
+"    listen"
+server {
+listen 80;
+server_name 3.80.55.131;
+location / {
+include proxy_params;
+proxy_pass http://unix:/home/ubuntu/save-the-date/save-the-date.sock;
+}
+}
+
+[Unit]
+Description=Gunicorn instance
+After=network.target
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/save-the-date
+Environment="PATH=/home/ubuntu/save-the-date/venv/bin"
+ExecStart=/home/ubuntu/save-the-date/venv/bin/gunicorn --workers 3 --bind unix:save-the-date.sock -m 007 wsgi:application
+[Install]
+WantedBy=multi-user.target
