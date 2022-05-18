@@ -51,12 +51,7 @@ class Question:
             one_question = cls(row)
             user_data = {
                 "id": row['users.id'],
-                "first_name": row['first_name'],
-                "last_name": row['last_name'],
-                "email": row['email'],
                 "password": row['password'],
-                "created_at": row['users.created_at'],
-                "updated_at": row['users.updated_at']
             }
             author = user.User(user_data)
             # Associate the Question class instance with the User class instance by filling in the empty creator attribute in the Question class

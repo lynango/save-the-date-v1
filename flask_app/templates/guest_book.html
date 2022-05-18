@@ -30,15 +30,18 @@
             <h1>Kindly sign our Guest Book</h1>
             <h5>Leave some well wishes, share some wisdom, a piece of advice, or a funny memory.</h5>
         </div>
-        <div class="d-flex pt-4 justify-content-center">
+        <div class="d-flex justify-content-center pt-4">
             <div class="split-it mt-3 border-right">
-                <h3 class="pb-3">Messages</h3>
+                <h3 class="d-flex justify-content-start pb-3">Messages</h3>
                 {% for one_message in all_messages %}
-                    <p class="bubble">{{one_message.message}} - {{one_message.creator.first_name}}</p>
+                    <div class="d-flex align-items-center">
+                        <p class="bubble">"{{one_message.message}}"</p>
+                        <p> -{{one_message.name}}<p>
+                    </div>
                 {% endfor %}
             </div>
-            <div class="split-it border-left">
-                <form action="/leave/message" method="post" class="form-inline pt-4 justify-content-center">
+            <div class="guest-book border-left">
+                <form action="/leave/message" method="post">
                     {% with messages = get_flashed_messages() %}
                         {% if messages %}
                         <div class="alert alert-danger" role="alert">
@@ -49,11 +52,13 @@
                         </div>
                         {% endif %}
                     {% endwith %}
-                    <div class="form-group mb-2">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control guest-book-font" name="name">               
+                    </div>
+                    <div class="form-group">
                         <label for="message" class="col-sm-2 col-form-label">Message:</label>
-                        <div class="col-lg-10">
-                            <textarea name="message" cols="30" rows="5" class="form-control guest-book-font"></textarea>
-                        </div>                
+                        <textarea name="message" cols="30" rows="5" class="form-control guest-book-font"></textarea>
                     </div>
                     <button type="submit" value="message" class="btn btn-primary mb-2">Submit</button>
                 </form>

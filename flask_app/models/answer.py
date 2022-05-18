@@ -63,23 +63,14 @@ class Answer:
             answersList.append(answer)
         return answersList
 
-# # Update answer
-#     @classmethod
-#     def update(cls, data):
-#         query = "UPDATE answers SET answer=%(answer)s,updated_at=NOW() WHERE id = %(id)s;"
-#         return connectToMySQL(cls.db_name).query_db(query,data)
+# Update answer
+    @classmethod
+    def update(cls, data):
+        query = "UPDATE answers SET answer=%(answer)s,updated_at=NOW() WHERE id = %(id)s;"
+        return connectToMySQL(cls.db_name).query_db(query,data)
 
-# # Delete answer
-#     @classmethod
-#     def delete(cls,data):
-#         query = "DELETE FROM answers WHERE id = %(id)s;"
-#         return connectToMySQL(cls.db_name).query_db(query,data)
-
-# Validation checkpoint for submitted answer
-    @staticmethod
-    def validate_answer(answer):
-        is_valid = True
-        if len(answer['answer']) < 2:
-            is_valid = False
-            flash("Answer must be at least 2 characters", "answer")
-        return is_valid
+# Delete answer
+    @classmethod
+    def delete(cls,data):
+        query = "DELETE FROM answers WHERE id = %(id)s;"
+        return connectToMySQL(cls.db_name).query_db(query,data)

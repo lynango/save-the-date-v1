@@ -4,42 +4,26 @@ from flask_app.models.user import User
 from flask_app.models.message import Message
 from flask_app.models.question import Question
 from flask_app.models.answer import Answer
-from flask_bcrypt import Bcrypt
 
-bcrypt = Bcrypt(app)
-
-#Shows the front page
+#Shows the sign-in page
 @app.route('/')
 def index():
-    return render_template('login_registration.html')
+    return render_template('sign_in.html')
 
-#Process user's request to register
-@app.route('/register',methods=['POST'])
-def register():
-    if not User.registration(request.form):
-        return redirect('/')
-    data ={ 
-        "first_name": request.form['first_name'],
-        "last_name": request.form['last_name'],
-        "email": request.form['email'],
-        "password": bcrypt.generate_password_hash(request.form['password'])
-    }
-    user_id = User.save(data)
-    session['user_id'] = user_id
-    return redirect('/home')
+#Shows the contact page
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 #Process user's request to login
 @app.route('/login',methods=['POST'])
 def login():
-    data = {"email": request.form['email']} 
-    user_with_email = User.get_by_email(data) 
-    if user_with_email == False:
-        flash("Invalid Email/Password","login") 
+    data = {"password": request.form['password']} 
+    user_with_password = User.get_by_password(data) 
+    if user_with_password == False:
+        flash("That is not the secret password","login") 
         return redirect('/')
-    if not bcrypt.check_password_hash(user_with_email.password, request.form['password']): 
-        flash("Invalid Email/Password","login") 
-        return redirect('/')
-    session['user_id'] = user_with_email.id
+    session['user_id'] = user_with_password.id
     return redirect('/home') 
 
 
@@ -114,23 +98,6 @@ def guestBook():
         all_messages = messages
     )
 
-# Directs the user to the edit page to edit question
-@app.route('/edit/question/<int:id>')
-def edit_question(id):
-    if 'user_id' not in session:
-        return redirect('/logout')
-    data = {
-        "id":id
-    }
-    user_data = {
-        "id":session['user_id']
-    }
-    return render_template(
-        "edit_question.html",
-        edit=Question.get_one(data),
-        user=User.get_by_id(user_data)
-        )
-
 #Directs the user to the FAQS page
 @app.route('/faqs')
 def faqs():
@@ -151,27 +118,27 @@ def faqs():
         all_answers = all_answers,
         )
 
-# Directs the user to the reply_question page to reply to question
-@app.route('/reply/question/<int:id>')
-def show_question(id):
-    if 'user_id' not in session:
-        return redirect('/logout')
-    data = {
-        "id":id
-    }
-    user_data = {
-        "id":session['user_id']
-    }
-    all_answers=Answer.get_one(data),
-    # print("**********all answers type = ",type(all_answers))
-    print("**********all answers = ",all_answers)
-    for answer in all_answers:
-        # print("**********answer type = ",type(answer))
-        print("**********answer = ",answer)
-    return render_template(
-        "reply_question.html",
-        question = Question.get_one(data),
-        user=User.get_by_id(user_data),
-        all_answers=all_answers,
-        )
+# # Directs the user to the reply_question page to reply to question
+# @app.route('/reply/question/<int:id>')
+# def show_question(id):
+#     if 'user_id' not in session:
+#         return redirect('/logout')
+#     data = {
+#         "id":id
+#     }
+#     user_data = {
+#         "id":session['user_id']
+#     }
+#     all_answers=Answer.get_one(data),
+#     # print("**********all answers type = ",type(all_answers))
+#     print("**********all answers = ",all_answers)
+#     for answer in all_answers:
+#         # print("**********answer type = ",type(answer))
+#         print("**********answer = ",answer)
+#     return render_template(
+#         "reply_question.html",
+#         question = Question.get_one(data),
+#         user=User.get_by_id(user_data),
+#         all_answers=all_answers,
+#         )
 

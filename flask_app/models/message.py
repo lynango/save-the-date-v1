@@ -8,6 +8,7 @@ class Message:
 
     def __init__(self,db_data):
         self.id = db_data['id']
+        self.name = db_data['name']
         self.message = db_data['message']
         self.created_at = db_data['created_at']
         self.updated_at = db_data['updated_at']
@@ -17,8 +18,8 @@ class Message:
     @classmethod
     def save(cls,data):
         query = """
-        INSERT INTO messages (message, user_id) 
-        VALUES (%(message)s,%(user_id)s);
+        INSERT INTO messages (name, message, user_id) 
+        VALUES (%(name)s,%(message)s,%(user_id)s);
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
 
@@ -46,12 +47,7 @@ class Message:
             one_message = cls(row)
             user_data = {
                 "id": row['users.id'],
-                "first_name": row['first_name'],
-                "last_name": row['last_name'],
-                "email": row['email'],
                 "password": row['password'],
-                "created_at": row['users.created_at'],
-                "updated_at": row['users.updated_at']
             }
             author = user.User(user_data)
             # Associate the Message class instance with the User class instance by filling in the empty creator attribute in the Message class

@@ -11,6 +11,7 @@ def leave_message():
     if not Message.validate_message(request.form):
         return redirect('/guest-book')
     data = {
+        "name": request.form["name"],
         "message": request.form["message"],
         "user_id": session["user_id"]
     }

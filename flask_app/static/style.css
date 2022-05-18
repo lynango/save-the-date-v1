@@ -4,6 +4,16 @@
     font-family: 'Alegreya SC';
     font-size: large;
 }
+body, html {
+    height: 100%;
+}
+.background {
+    background-image: url("background.webp");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+}
 p {
     font-size: 20px;
 }
@@ -54,13 +64,40 @@ p {
 .guest-book-font {
     font-family: 'Square Peg';
 }
+.guest-book {
+    width: 40%;
+    height: auto;
+    padding: 0% 10% 0% 10%;
+    margin-top: 2%;
+}
 .bubble {
     font-family: 'Square Peg';
     font-size: 18px;
     height: auto;
-    width: 100%;
+    width: 70%;
     padding: 3%;
+    margin-right: 10px;
     background: #E3F2FD;
     border-radius: 40px;
     text-align: center;
+}
+.sign-in {
+    width: 25%;
+    height: auto;
+    padding: 2%;
+    background-color: white;
+    border-radius: 18px;
+}
+.center {
+    text-align: center;
+}
+.contact {
+        width: 50%;
+        padding: 3%;
+        margin-left: 25%;
+        margin-right: 10%;
+        display: inline-block;
+        text-align: center;
+        background: #E3F2FD;
+        border-radius: 40px;
 }

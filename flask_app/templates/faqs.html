@@ -43,7 +43,7 @@
                 <div class="form-group mb-2 pl-5">
                     <label for="question" class="col-sm-2 col-form-label">Question:</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" name="question">
+                        <input type="text" class="form-control guest-book-font" name="question">
                     </div>                
                 </div>
                 <button type="submit" value="question" class="btn btn-primary mb-2">Submit</button>
@@ -51,33 +51,16 @@
         </div>
         <div class="d-flex pt-4 justify-content-center">
             <div class="split-it mt-3 border-right">
-                <div><h3>Questions</h3></div>                
-                <div class="d-flex justify-content-center">
-                    <table>
-                        <thead>
-                        </thead>
-                    <tbody>
-                        {% for one_question in all_questions %}
-                        <tr>
-                            <td>Question: {{one_question.question}} <br>
-                                    <a href="/reply/question/{{one_question.id}}">Reply |</a>
-                                {% if one_question.user_id == session.user_id %}
-                                    <a href="/edit/question/{{one_question.id}}">Edit |</a>
-                                    <a href="/delete/question/{{one_question.id}}">Delete</a>
-                                {% endif %}
-                                <hr>
-                            </td>
-                            {#{% for one_answer in all_answers[0] %}
-                            <td>Answer: {{one_answer.answer}}</td>
-                            {% endfor %} #}
-                        </tr>
+                <h2>Questions</h2>   
+                    <br>           
+                    {% for one_question in all_questions %}
+                        <p>{{one_question.question}}</p>
+                        <hr>
                     {% endfor %}
-                    </tbody>
-                    </table>
-                </div>
             </div>
             <div class="split-it mt-3 border-left">
-                <h3>Answers</h3>
+                <h2>Answers</h2>
+                <br>
                         {% for one_answer in all_answers %}
                             <p>{{one_answer.answer}}</p>
                             <hr>
