@@ -47,6 +47,7 @@ class Message:
             one_message = cls(row)
             user_data = {
                 "id": row['users.id'],
+                "first_name": row['first_name'],
                 "password": row['password'],
             }
             author = user.User(user_data)
