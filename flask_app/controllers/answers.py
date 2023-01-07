@@ -2,7 +2,6 @@ from flask import redirect,session,request
 from flask_app import app
 from flask_app.models.answer import Answer
 from flask_app.models.question import Question
-from flask_app.models.user import User
 
 # #Process the user's request to reply to a question
 # @app.route('/reply',methods=['POST'])
