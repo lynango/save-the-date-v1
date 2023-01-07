@@ -1,7 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app import app
 from flask import flash
-from flask_app.models import user
 
 class Message:
     db_name = "save_the_date"
@@ -18,42 +17,23 @@ class Message:
     @classmethod
     def save(cls,data):
         query = """
-        INSERT INTO messages (name, message, user_id) 
-        VALUES (%(name)s,%(message)s,%(user_id)s);
+        INSERT INTO messages (name, message) 
+        VALUES (%(name)s,%(message)s);
         """
         return connectToMySQL(cls.db_name).query_db(query, data)
 
 # Retrieve all messages
     @classmethod
     def get_all(cls):
-        query = "SELECT * FROM messages;"
-        results =  connectToMySQL(cls.db_name).query_db(query)
-        messages = []
-        for row in results:
-            messages.append( cls(row) )
-        return messages
-
-# Retrieve all messages with creator
-    @classmethod
-    def get_all_messages_with_creator(cls):
         query = """
-        SELECT * FROM messages 
-        JOIN users ON messages.user_id = users.id 
+        SELECT * FROM messages
         ORDER BY messages.created_at DESC;
         """
-        results = connectToMySQL(cls.db_name).query_db(query)
+        results =  connectToMySQL(cls.db_name).query_db(query)
         all_messages = []
         for row in results:
-            one_message = cls(row)
-            user_data = {
-                "id": row['users.id'],
-                "first_name": row['first_name'],
-                "password": row['password'],
-            }
-            author = user.User(user_data)
-            # Associate the Message class instance with the User class instance by filling in the empty creator attribute in the Message class
-            one_message.creator = author
-            all_messages.append(one_message)
+            print(row)
+            all_messages.append( cls(row) )
         return all_messages
 
 # # Retrieve a certain message

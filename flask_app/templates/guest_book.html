@@ -23,7 +23,6 @@
             <a href="/lodging" class="navbar-brand">Lodging</a>
             <a href="/guest-book" class="navbar-brand">Guest Book</a>    
             <a href="/faqs" class="navbar-brand">FAQS</a>
-            <a href="/logout" class="navbar-brand">Logout</a>
             </nav>
         </div>
         <div class="block">
@@ -33,10 +32,10 @@
         <div class="d-flex justify-content-center pt-4">
             <div class="split-it mt-3 border-right">
                 <h3 class="d-flex justify-content-start pb-3">Messages</h3>
-                {% for one_message in all_messages %}
+                {% for message in all_messages %}
                     <div class="d-flex align-items-center">
-                        <p class="bubble">"{{one_message.message}}"</p>
-                        <p> -{{one_message.name}}<p>
+                        <p class="bubble">"{{message.message}}"</p>
+                        <p> -{{message.name}}<p>
                     </div>
                 {% endfor %}
             </div>

@@ -1,18 +1,14 @@
 from flask import redirect,session,request, flash
 from flask_app import app
 from flask_app.models.question import Question
-from flask_app.models.user import User
 
 #Process the user's request to ask a new question
 @app.route('/ask/question',methods=['POST'])
 def ask_question():
-    if 'user_id' not in session:
-        return redirect('/logout')
     if not Question.validate_question(request.form):
         return redirect('/faqs')
     data = {
-        "question": request.form["question"],
-        "user_id": session["user_id"]
+        "question": request.form["question"]
     }
     Question.save(data)
     return redirect('/faqs')
