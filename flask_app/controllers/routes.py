@@ -9,11 +9,6 @@ from flask_app.models.answer import Answer
 def index():
     return render_template('home.html')
 
-#Validation checkpoint for logged in users
-@app.route('/home')
-def dashboard():                                                                                                                                      
-    return render_template("home.html")
-
 #Directs the user to the schedule page
 @app.route('/schedule')
 def schedule():

@@ -16,8 +16,6 @@ def ask_question():
 # #Process the user's request to delete their question.
 # @app.route('/delete/question/<int:id>')
 # def delete_question(id):
-#     if 'user_id' not in session:
-#         return redirect('/logout')
 #     data = {
 #         "id":id
 #     }
@@ -27,8 +25,6 @@ def ask_question():
 # #Process the user's request to update their question 
 # @app.route('/edit/question',methods=['POST'])
 # def editQuestion():
-#     if 'user_id' not in session:
-#         return redirect('/logout')
 #     if not Question.validate_question(request.form):
 #         return redirect('/edit/question/<int:id>')
 #     data = {
